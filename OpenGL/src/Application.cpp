@@ -2,9 +2,12 @@
 #include<GLFW/glfw3.h>
 
 #include<iostream>
+#include "Helper.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
+
+#define LOG(x) std::cout << x << std::endl
 
 int main(void) {
 	GLFWwindow* window;
@@ -14,7 +17,7 @@ int main(void) {
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Challenge One", NULL, NULL);
+	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "OpenGL Template", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		return -1;
@@ -23,19 +26,37 @@ int main(void) {
 	/* Make the windows's context current */
 	glfwMakeContextCurrent(window);
 
-	glViewport(0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
 	glewInit();
 
-	std::cout << glGetString(GL_VERSION) << std::endl;
+	Helper helper = Helper();
+	helper.setup(window, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	GLfloat pointVertex[] = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
+	GLfloat quadVertices[] =
+	{
+		300, 300, 0.0, // top right corner
+		50, 300, 0.0, // top left corner
+		50, 50, 0.0, // bottom left corner
+		300, 50, 0.0 // bottom right corner
+	};
 
+	GLfloat colorRed[]{
+		255, 0, 0,
+		255, 0, 0,
+		255, 0, 0,
+		255, 0, 0,
+	};
+
+	GLfloat lineVertices[] =
+	{
+		200, 100, 0,
+		100, 300, 0
+	};
+
+	GLfloat lineVertices2[] =
+	{
+		300, 200, 0,
+		200, 400, 0
+	};
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -43,11 +64,9 @@ int main(void) {
 
 		/* Render here */
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glPointSize(200);
-		glVertexPointer(2, GL_FLOAT, 0, pointVertex);
-		glDrawArrays(GL_POINT, 0, 1);
-		glDisableClientState(GL_VERTEX_ARRAY);
+		helper.drawPolygon(quadVertices, 4, colorRed);
+		helper.drawLine(lineVertices, 5);
+		helper.drawLine(lineVertices2, 4, 0x00FF);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
