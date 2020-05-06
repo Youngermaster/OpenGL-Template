@@ -1,8 +1,10 @@
 #pragma once
-#include<GLFW/glfw3.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <math.h>
 #include<iostream>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 
 class Helper
 {
@@ -22,11 +24,13 @@ public:
 	void drawLine(GLfloat vertices[], GLint width, GLint stipple);
 
 	void drawLineStripLoop(GLfloat vertices[], int size);
-
 	void drawLineStripLoop(GLfloat vertices[], int size, GLfloat color[]);
 
 	void drawPolygon(GLfloat vertices[], int size);
 	void drawPolygon(GLfloat vertices[], int size, GLfloat color[]);
+
+	void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius);
+	void drawHollowCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius);
 
 	void drawBresenhamsLine(int x0, int y0, int xEnd, int yEnd);
 

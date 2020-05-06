@@ -30,7 +30,7 @@ int main(void) {
 
 	Helper helper = Helper();
 	helper.setup(window, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+	
 	GLfloat quadVertices[] =
 	{
 		300, 300, 0.0, // top right corner
@@ -58,6 +58,14 @@ int main(void) {
 		200, 400, 0
 	};
 
+	GLfloat lineVertices3[] =
+	{
+		200, 100, 0,
+		100, 300, 0,
+		500, 50, 0,
+		320, 100, 0,
+		10, 10, 0
+	};
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -67,7 +75,9 @@ int main(void) {
 		helper.drawPolygon(quadVertices, 4, colorRed);
 		helper.drawLine(lineVertices, 5);
 		helper.drawLine(lineVertices2, 4, 0x00FF);
-
+		helper.drawLineStripLoop(lineVertices3, 5);
+		//helper.drawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0, 120);
+		helper.drawHollowCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0, 120);
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 
